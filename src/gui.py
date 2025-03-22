@@ -44,7 +44,7 @@ except ValueError:
     return
 
 #Validate gender
-if gender not in ["Male", "Female", "Other"]
+if gender not in ["Male", "Female", "Other"]:
     messagebox.showerror("Please input a valid gender.")
     return
 
