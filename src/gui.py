@@ -2,13 +2,10 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 from datetime import datetime
-<<<<<<< HEAD
 from fileHandler import saveRecords
 
 import os
 import csv
-=======
->>>>>>> 9dd1020d4e7cd37b1ae6a183bef922f0cf5c27cf
 
 # Initialize root window
 root = tk.Tk()
@@ -46,9 +43,6 @@ def signUp():
 
 #call the function to save the records
     saveRecords("records.csv", [firstName, middleName, lastName, birthday, gender])
-
-
-
 
 #Frame to hold the form
 form_frame = tk.Frame(root, bg='#8d2991', padx=20, pady=20)
