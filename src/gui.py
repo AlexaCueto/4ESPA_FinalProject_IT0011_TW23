@@ -8,6 +8,7 @@ import csv
 root = tkinter.Tk()
 root.title("Registration Form")
 root.geometry("400x400")
+root.configure(bg='#ef8169')
 
 def signUp():
     firstName = firstNameEntry.get().strip()
