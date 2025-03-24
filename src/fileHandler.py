@@ -2,7 +2,7 @@ import os
 import csv
 
 def saveRecords(filename, data):
-    file_exists = os.path.isfile(filename) #  check if file exists
+    file_exists = os.path.isfile(filename) #check if file exists
     
     try:
         with open(filename, mode='a', newline='') as file:
@@ -10,11 +10,11 @@ def saveRecords(filename, data):
                           "Last Name", "Birthday", "Gender"]
             writer = csv.DictWriter(file, fieldnames=fieldnames)
     
-    # write the header only if the file does not exist 
+    #write the header only if the file does not exist 
             if not file_exists:
                 writer.writeheader()
     
-# Write the new record to the file
+#Write the new record to the file
             writer.writerow({
                 "First Name": data[0],
                 "Middle Name": data[1],
@@ -26,7 +26,7 @@ def saveRecords(filename, data):
         print("Error saving record: ", e)
         
         
-# FUNCTION load records
+#FUNCTION load records
 def loadRecords(filename):
     try:    
         if not os.path.exists(filename):
