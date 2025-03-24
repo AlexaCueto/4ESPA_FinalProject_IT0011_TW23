@@ -36,47 +36,58 @@ def signUp():
     saveRecords("records.csv", [firstName, middleName, lastName, birthday, gender])
     
 #ALL GUI STUFF BELOW
-     
-
-# Initialize root window
+#Initialize root window
 root = tk.Tk()
 root.title("Registration Form")
 root.geometry("400x400")
 root.configure(bg='#8d2991')
+windowWidth = 500 #width for the window for responsiveness
+windowHeight = 400 #height for the window for responsiveness 
+root.geometry(f"{windowWidth}x{windowHeight}") #set the window size
+
+#Centering the frame
+containerFrame = tk.Frame(root, bg='#8d2991', padx=30, pady=30, relief="ridge", bd=2)
+containerFrame.place(relx=0.5, rely=0.5, anchor="center", width=500, height=400)
 
 # Configure grid columns
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=2)
 
 #Frame to hold the form
-form_frame = tk.Frame(root, bg='#8d2991', padx=20, pady=20)
-form_frame.grid(row=0, column=0, columnspan=2, sticky="news") #news stands for NORTH, EAST, WEST, SOUTH
+formFrame = tk.Frame(root, bg='#8d2991', padx=20, pady=20)
+formFrame.grid(row=0, column=0, columnspan=2, sticky="news") #news stands for NORTH, EAST, WEST, SOUTH
 
 #Title Label
-tk.Label(form_frame, text="Registration Form", font="Helvetica 16 bold", bg='#8d2991', fg="white").grid(row=0, column=0, columnspan=2, pady=10)
+formFrame = tk.Frame(containerFrame, bg='#8d2991')
+formFrame.pack(fill="x", pady=10)
+tk.Label(formFrame, text="Registration Form", font="Helvetica 16 bold", bg='#8d2991', fg="white").grid(row=0, column=0, columnspan=2, pady=10)
 
 #Form Labels and Entries
+entryFrame = tk.Frame(containerFrame, bg='#8d2991')
+entryFrame.pack(fill="both", expand=True)
+
 labels = ["First Name:", "Middle Name:", "Last Name:", "Birthday (MM/DD/YYYY):", "Gender:"]
+entries = []
 for i, label in enumerate(labels):
-    tk.Label(form_frame, text=label, bg='#8d2991', fg="white", anchor="w").grid(row=i+1, column=0, sticky="w", pady=5) 
+    tk.Label(formFrame, text=label, bg='#8d2991', fg="white", anchor="w").grid(row=i+1, column=0, sticky="w", pady=5) 
 
 #Entry fields
-firstNameEntry = tk.Entry(form_frame)
-middleNameEntry = tk.Entry(form_frame)
-lastNameEntry = tk.Entry(form_frame)
-birthdayEntry = tk.Entry(form_frame)
-genderEntry = ttk.Combobox(form_frame, values=["Male", "Female", "Other"], state="readonly")
+firstNameEntry = tk.Entry(formFrame)
+middleNameEntry = tk.Entry(formFrame)
+lastNameEntry = tk.Entry(formFrame)
+birthdayEntry = tk.Entry(formFrame)
+genderEntry = ttk.Combobox(formFrame, values=["Male", "Female", "Other"], state="readonly")
 
 entries = [firstNameEntry, middleNameEntry, lastNameEntry, birthdayEntry, genderEntry]
 for i, entry in enumerate(entries):
     entry.grid(row=i+1, column=1, sticky="ew", padx=10, pady=5)
 
 #Submit Button
-tk.Button(form_frame, text="Sign Up", command=signUp, bg="white", fg="#8d2991", font="Helvetica 12 bold").grid(row=6, column=0, columnspan=2, pady=15, sticky="ew")
+tk.Button(formFrame, text="Sign Up", command=signUp, bg="white", fg="#8d2991", font="Helvetica 12 bold").grid(row=6, column=0, columnspan=2, pady=15, sticky="ew")
 
 #Adjust column weights for responsiveness
-form_frame.columnconfigure(0, weight=1)
-form_frame.columnconfigure(1, weight=2)
+formFrame.columnconfigure(0, weight=1)
+formFrame.columnconfigure(1, weight=2)
 
 #Run the main loop
 root.mainloop() 
