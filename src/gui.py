@@ -36,58 +36,77 @@ def signUp():
     saveRecords("records.csv", [firstName, middleName, lastName, birthday, gender])
     
 #ALL GUI STUFF BELOW
-#Initialize root window
+# Initialize root window
 root = tk.Tk()
-root.title("Registration Form")
-root.geometry("400x400")
-root.configure(bg='#8d2991')
-windowWidth = 500 #width for the window for responsiveness
-windowHeight = 400 #height for the window for responsiveness 
-root.geometry(f"{windowWidth}x{windowHeight}") #set the window size
+root.title("Sign Up")
+root.geometry("400x500")
+root.configure(bg='#e6e6fa')
 
-#Centering the frame
-containerFrame = tk.Frame(root, bg='#8d2991', padx=30, pady=30, relief="ridge", bd=2)
-containerFrame.place(relx=0.5, rely=0.5, anchor="center", width=500, height=400)
+# For rounded corners
+style = ttk.Style()
+style.theme_use('clam')  # Use the 'clam' theme for better customization
 
-# Configure grid columns
-root.columnconfigure(0, weight=1)
-root.columnconfigure(1, weight=2)
+style.configure("RoundedFrame.TFrame", background='white', borderwidth=0, relief='flat')
+style.configure("RoundedLabel.TLabel", background='white', foreground='#4B0082', font=("Arial", 12))
+style.configure("RoundedEntry.TEntry", fieldbackground='#f0e6fa', foreground='#4B0082', font=("Arial", 12), borderwidth=0, highlightthickness=0)
+style.configure("RoundedButton.TButton", background='#9370DB', foreground='white', font=("Arial", 12, 'bold'), borderwidth=0, relief='flat')
 
-#Frame to hold the form
-formFrame = tk.Frame(root, bg='#8d2991', padx=20, pady=20)
-formFrame.grid(row=0, column=0, columnspan=2, sticky="news") #news stands for NORTH, EAST, WEST, SOUTH
 
-#Title Label
-formFrame = tk.Frame(containerFrame, bg='#8d2991')
-formFrame.pack(fill="x", pady=10)
-tk.Label(formFrame, text="Registration Form", font="Helvetica 16 bold", bg='#8d2991', fg="white").grid(row=0, column=0, columnspan=2, pady=10)
+# Function to create rounded frame
+def rounded_frame(parent, **kwargs):
+    frame = ttk.Frame(parent, style="RoundedFrame.TFrame", **kwargs)
+    return frame
 
-#Form Labels and Entries
-entryFrame = tk.Frame(containerFrame, bg='#8d2991')
-entryFrame.pack(fill="both", expand=True)
 
+# Function to update responsiveness
+def on_resize(event):
+    canvas.config(width=event.width, height=event.height)
+    canvas.coords(floating_window, event.width // 2, event.height // 2)
+    floatingFrame.config(width=min(400, event.width - 50), height=min(500, event.height - 50))
+
+
+root.bind("<Configure>", on_resize)
+
+# Canvas for floating effect
+canvas = tk.Canvas(root, bg='#e6e6fa', highlightthickness=0)
+canvas.pack(fill='both', expand=True)
+
+# Floating frame (white background with rounded corners)
+floatingFrame = rounded_frame(canvas, padding=20)
+floating_window = canvas.create_window(200, 250, window=floatingFrame, width=400, height=500, anchor="center")
+
+# Frame to hold the form
+formFrame = rounded_frame(floatingFrame, padding=20)
+formFrame.pack(fill="both", expand=True)
+
+# Title Label
+ttk.Label(formFrame, text="Sign Up", style="RoundedLabel.TLabel", font=("Helvetica", 18, 'bold')).grid(row=0, column=0, columnspan=2, pady=10, sticky="ew")
+
+# Form Labels and Entries
 labels = ["First Name:", "Middle Name:", "Last Name:", "Birthday (MM/DD/YYYY):", "Gender:"]
 entries = []
-for i, label in enumerate(labels):
-    tk.Label(formFrame, text=label, bg='#8d2991', fg="white", anchor="w").grid(row=i+1, column=0, sticky="w", pady=5) 
 
-#Entry fields
-firstNameEntry = tk.Entry(formFrame)
-middleNameEntry = tk.Entry(formFrame)
-lastNameEntry = tk.Entry(formFrame)
-birthdayEntry = tk.Entry(formFrame)
-genderEntry = ttk.Combobox(formFrame, values=["Male", "Female", "Other"], state="readonly")
+for i, label in enumerate(labels):
+    ttk.Label(formFrame, text=label, style="RoundedLabel.TLabel").grid(row=i + 1, column=0, sticky="w", pady=5)
+
+# Entry fields
+entry_style = {"font": "Helvetica 12", "bg": "#f0e6fa", "fg": "#4B0082", "relief": "flat", "highlightthickness": 0}
+firstNameEntry = tk.Entry(formFrame, **entry_style)
+middleNameEntry = tk.Entry(formFrame, **entry_style)
+lastNameEntry = tk.Entry(formFrame, **entry_style)
+birthdayEntry = tk.Entry(formFrame, **entry_style)
+genderEntry = ttk.Combobox(formFrame, values=["Male", "Female", "Other"], state="readonly", style="RoundedEntry.TEntry")
 
 entries = [firstNameEntry, middleNameEntry, lastNameEntry, birthdayEntry, genderEntry]
 for i, entry in enumerate(entries):
-    entry.grid(row=i+1, column=1, sticky="ew", padx=10, pady=5)
+    entry.grid(row=i + 1, column=1, sticky="ew", padx=10, pady=5)
 
-#Submit Button
-tk.Button(formFrame, text="Sign Up", command=signUp, bg="white", fg="#8d2991", font="Helvetica 12 bold").grid(row=6, column=0, columnspan=2, pady=15, sticky="ew")
+# Submit Button
+ttk.Button(formFrame, text="Sign Up", command=signUp, style="RoundedButton.TButton").grid(row=6, column=0, columnspan=2, pady=15, sticky="ew")
 
-#Adjust column weights for responsiveness
+# Adjust column weights for responsiveness
 formFrame.columnconfigure(0, weight=1)
 formFrame.columnconfigure(1, weight=2)
 
-#Run the main loop
-root.mainloop() 
+# Run the main loop
+root.mainloop()
