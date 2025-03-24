@@ -2,6 +2,8 @@ import tkinter
 from tkinter import messagebox
 from tkinter import ttk
 from datetime import datetime
+from fileHandler import saveRecords
+
 import os
 import csv
 
@@ -38,6 +40,10 @@ def signUp():
     messagebox.showinfo(f"Registration Successful!\n\nFirst Name: {firstName}\nMiddle Name: {middleName}\nLast Name: {lastName}\nBirthday: {birthday}\nGender: {gender}")
 
 #call the function to save the records
+    saveRecords("records.csv", [firstName, middleName, lastName, birthday, gender])
+
+
+
 
 #Create form labels
 tkinter.Label(root, text="Registration Form", font="Helvetica 16 bold").pack(pady=10)
