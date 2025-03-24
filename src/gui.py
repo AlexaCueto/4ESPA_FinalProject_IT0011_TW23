@@ -111,6 +111,8 @@ formFrame.columnconfigure(1, weight=3)
 #Run the main loop
 root.mainloop()
 
+
+#SAM'S CODE STARTS HERE---
 def load_records(filename):
     """Load records from a CSV file."""
     try:
