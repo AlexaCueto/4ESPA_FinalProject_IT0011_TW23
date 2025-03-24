@@ -1,14 +1,9 @@
 import tkinter as tk
-from tkinter import messagebox
-from tkinter import ttk
+from tkinter import messagebox, ttk
 from datetime import datetime
 from fileHandler import saveRecords
 
-import os
-import csv
-
-
-# Function to handle signup
+#Function to handle signup
 def signUp():
     firstName = firstNameEntry.get().strip()
     middleName = middleNameEntry.get().strip()
@@ -32,21 +27,28 @@ def signUp():
 
     messagebox.showinfo("Success", f"Registration Successful!\n\nFirst Name: {firstName}\nMiddle Name: {middleName}\nLast Name: {lastName}\nBirthday: {birthday}\nGender: {gender}")
 
-#call the function to save the records
     saveRecords("records.csv", [firstName, middleName, lastName, birthday, gender])
-    
-#ALL GUI STUFF BELOW
+
+#Function to update gender display with an upside-down arrow
+def update_gender_display(event=None):
+    selected_gender = genderEntry.get()
+    if selected_gender and selected_gender not in ["▼ Male", "▼ Female", "▼ Other"]:
+        genderEntry.set(selected_gender)
+
+#Function to remove arrow when clicked
+def remove_arrow(event=None):
+    selected_gender = genderEntry.get().replace("▼ ", "")
+    genderEntry.set(selected_gender)
+
 #Initialize root window
 root = tk.Tk()
 root.title("Sign Up")
-root.geometry("400x500")
-root.configure(bg='#e6e6fa')  
+root.geometry("600x550")  #Default size
+root.configure(bg='#e6e6fa')
 
-# Style for rounded corners
-#For rounded corners
+#Style for rounded corners
 style = ttk.Style()
-style.theme_use('clam')  # Use the 'clam' theme for better customization
-
+style.theme_use('clam')
 style.configure("RoundedFrame.TFrame", background='white', borderwidth=0, relief='flat')
 style.configure("RoundedLabel.TLabel", background='white', foreground='#4B0082', font=("Arial", 12))
 style.configure("RoundedEntry.TEntry", fieldbackground='#f0e6fa', foreground='#4B0082', font=("Arial", 12), borderwidth=0, highlightthickness=0)
@@ -57,55 +59,54 @@ def rounded_frame(parent, **kwargs):
     frame = ttk.Frame(parent, style="RoundedFrame.TFrame", **kwargs)
     return frame
 
+#Centering the frame
+floatingFrame = rounded_frame(root, padding=30)
+floatingFrame.place(relx=0.5, rely=0.5, anchor="center", width=650, height=450)
 
-# Function to update responsiveness
-def on_resize(event):
-    canvas.configure(width=event.width, height=event.height)
-    canvas.coords(floatingFrame, event.width // 2, event.height // 2)
-    floatingFrame.config(width=min(350, event.width - 40), height=min(450, event.height - 40))
-
-root.bind("<Configure>", on_resize)
-
-# Canvas for floating effect
-canvas = tk.Canvas(root, bg='#e6e6fa', highlightthickness=0)
-canvas.pack(fill='both', expand=True)
-
-# Floating div (white background with rounded corners)
-floatingFrame = rounded_frame(canvas, padding=30)
-canvas.create_window(200, 250, window=floatingFrame, width=350, height=450)
-
-# Frame to hold the form
+#Frame to hold the form
 formFrame = rounded_frame(floatingFrame, padding=20)
 formFrame.pack(fill="both", expand=True)
 
-# Title Label
-ttk.Label(formFrame, text="Sign Up", style="RoundedLabel.TLabel", font=("Helvetica", 18, 'bold')).grid(row=0, column=0, columnspan=2, pady=10)
+#Title Label
+ttk.Label(formFrame, text="Sign Up", style="RoundedLabel.TLabel", font=("Roboto", 18, 'bold')).grid(row=0, column=0, columnspan=2, pady=10)
 
-# Form Labels and Entries
+#Form Labels and Entries
 labels = ["First Name:", "Middle Name:", "Last Name:", "Birthday (MM/DD/YYYY):", "Gender:"]
-entries = []
+
 
 for i, label in enumerate(labels):
     ttk.Label(formFrame, text=label, style="RoundedLabel.TLabel").grid(row=i+1, column=0, sticky="w", pady=5)
 
-# Entry fields
-entry_style = {"font": "Arial 12", "bg": "#f0e6fa", "fg": "#4B0082", "relief": "flat", "highlightthickness": 0}
+#Entry fields
+entry_style = {"font": "Roboto 12", "bg": "#f0e6fa", "fg": "#4B0082", "relief": "flat", "highlightthickness": 0, "width": 40}
 firstNameEntry = tk.Entry(formFrame, **entry_style)
 middleNameEntry = tk.Entry(formFrame, **entry_style)
 lastNameEntry = tk.Entry(formFrame, **entry_style)
 birthdayEntry = tk.Entry(formFrame, **entry_style)
-genderEntry = ttk.Combobox(formFrame, values=["Male", "Female", "Other"], state="readonly", style="RoundedEntry.TEntry")
+genderEntry = ttk.Combobox(formFrame, values=["Male", "Female", "Other"], state="readonly", style="RoundedEntry.TEntry", width = 40)
+
+entries = [firstNameEntry, middleNameEntry, lastNameEntry, birthdayEntry, genderEntry]
+
+for i, entry in enumerate(entries):
+    entry.grid(row=i+1, column=1, sticky="ew", padx=15, pady=10)
+    
+#Set default arrow display
+genderEntry.set("Select Gender")
+
+#Bind events to modify arrow behavior
+genderEntry.bind("<<ComboboxSelected>>", update_gender_display)  #Add arrow back after selection
+genderEntry.bind("<Button-1>", remove_arrow)  #Remove arrow when clicked
 
 entries = [firstNameEntry, middleNameEntry, lastNameEntry, birthdayEntry, genderEntry]
 for i, entry in enumerate(entries):
-    entry.grid(row=i+1, column=1, sticky="ew", padx=10, pady=5)
+    entry.grid(row=i+1, column=1, sticky="ew", padx=10, pady=5) #ew is in the NEWS - NORTH, EAST, WEST AND SOUTH
 
-# Submit Button
+#Submit Button
 ttk.Button(formFrame, text="Sign Up", command=signUp, style="RoundedButton.TButton").grid(row=6, column=0, columnspan=2, pady=15, sticky="ew")
 
-# Adjust column weights for responsiveness
+#Adjust column weights for responsiveness
 formFrame.columnconfigure(0, weight=1)
-formFrame.columnconfigure(1, weight=2)
+formFrame.columnconfigure(1, weight=3)
 
-# Run the main loop
+#Run the main loop
 root.mainloop()
