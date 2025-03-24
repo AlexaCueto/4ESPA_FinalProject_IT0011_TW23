@@ -7,15 +7,6 @@ from fileHandler import saveRecords
 import os
 import csv
 
-# Initialize root window
-root = tk.Tk()
-root.title("Registration Form")
-root.geometry("400x400")
-root.configure(bg='#8d2991')
-
-# Configure grid columns
-root.columnconfigure(0, weight=1)
-root.columnconfigure(1, weight=2)
 
 # Function to handle signup
 def signUp():
@@ -43,6 +34,19 @@ def signUp():
 
 #call the function to save the records
     saveRecords("records.csv", [firstName, middleName, lastName, birthday, gender])
+    
+#ALL GUI STUFF BELOW
+     
+
+# Initialize root window
+root = tk.Tk()
+root.title("Registration Form")
+root.geometry("400x400")
+root.configure(bg='#8d2991')
+
+# Configure grid columns
+root.columnconfigure(0, weight=1)
+root.columnconfigure(1, weight=2)
 
 #Frame to hold the form
 form_frame = tk.Frame(root, bg='#8d2991', padx=20, pady=20)
@@ -75,4 +79,4 @@ form_frame.columnconfigure(0, weight=1)
 form_frame.columnconfigure(1, weight=2)
 
 #Run the main loop
-root.mainloop()
+root.mainloop() 
