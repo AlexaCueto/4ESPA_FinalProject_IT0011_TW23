@@ -7,7 +7,7 @@ import csv
 
 root = tkinter.Tk()
 root.title("Registration Form")
-root.geometry("800x600")
+root.geometry("400x400")
 
 def signUp():
     firstName = firstNameEntry.get().strip()
@@ -54,6 +54,28 @@ tkinter.Label(root, text="First Name:").pack()
 firstNameEntry = tkinter.Entry(root, textvariable=firstName)
 firstNameEntry.pack()
 
+# Middle Name
+tkinter.Label(root, text="Middle Name:").pack()
+middleNameEntry = tkinter.Entry(root, textvariable=middleName)
+middleNameEntry.pack()
+
+# Last Name
+tkinter.Label(root, text="Last Name:").pack()
+lastNameEntry = tkinter.Entry(root, textvariable=lastName)
+lastNameEntry.pack()
+
+# Birthday
+tkinter.Label(root, text="Birthday (MM/DD/YYYY):").pack()
+birthdayEntry = tkinter.Entry(root, textvariable=birthday)
+birthdayEntry.pack()
+
+# Gender
+tkinter.Label(root, text="Gender:").pack()
+genderEntry = ttk.Combobox(root, textvariable=gender, values=["Male", "Female", "Other"], state="readonly")
+genderEntry.pack()
+
+# Submit Button
+tkinter.Button(root, text="Sign Up", command=signUp, bg="green", fg="white").pack(pady=20)
 
 root.mainloop()
 
