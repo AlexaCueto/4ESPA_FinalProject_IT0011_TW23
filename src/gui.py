@@ -44,16 +44,11 @@ def signUp():
 
     messagebox.showinfo("Success", f"Registration Successful!\n\nFirst Name: {firstName}\nMiddle Name: {middleName}\nLast Name: {lastName}\nBirthday: {birthday}\nGender: {gender}")
 
-<<<<<<< HEAD
 #call the function to save the records
     saveRecords("records.csv", [firstName, middleName, lastName, birthday, gender])
 
 
 
-=======
-#Call the function to save the records
-#-----
->>>>>>> 9dd1020d4e7cd37b1ae6a183bef922f0cf5c27cf
 
 #Frame to hold the form
 form_frame = tk.Frame(root, bg='#8d2991', padx=20, pady=20)
