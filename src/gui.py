@@ -36,13 +36,13 @@ def signUp():
     saveRecords("records.csv", [firstName, middleName, lastName, birthday, gender])
     
 #ALL GUI STUFF BELOW
-# Initialize root window
+#Initialize root window
 root = tk.Tk()
 root.title("Sign Up")
 root.geometry("400x500")
 root.configure(bg='#e6e6fa')
 
-# For rounded corners
+#For rounded corners
 style = ttk.Style()
 style.theme_use('clam')  # Use the 'clam' theme for better customization
 
@@ -52,13 +52,13 @@ style.configure("RoundedEntry.TEntry", fieldbackground='#f0e6fa', foreground='#4
 style.configure("RoundedButton.TButton", background='#9370DB', foreground='white', font=("Arial", 12, 'bold'), borderwidth=0, relief='flat')
 
 
-# Function to create rounded frame
+#Function to create rounded frame
 def rounded_frame(parent, **kwargs):
     frame = ttk.Frame(parent, style="RoundedFrame.TFrame", **kwargs)
     return frame
 
 
-# Function to update responsiveness
+#Function to update responsiveness
 def on_resize(event):
     canvas.config(width=event.width, height=event.height)
     canvas.coords(floating_window, event.width // 2, event.height // 2)
