@@ -43,7 +43,7 @@ def remove_arrow(event=None):
 #Initialize root window
 root = tk.Tk()
 root.title("Sign Up")
-root.geometry("600x550")  #Default size
+root.geometry("700x550")  #Default size
 root.configure(bg='#e6e6fa')
 
 #Style for rounded corners
