@@ -5,7 +5,7 @@ import csv
 RECORDS_FILE = "records.csv"
 
 def loadRecords():
-    """Load records from a CSV file and skip the first row (header)."""
+    # Load records from a CSV file and skip the first row (header).
     try:
         with open(RECORDS_FILE, mode='r', newline='') as file:
             reader = csv.reader(file)
@@ -18,7 +18,7 @@ def loadRecords():
     return []
 
 def viewRecordWindow(mainWindow):
-    """Open a new window to display all records."""
+    # Open a new window to display all records.
     root = tk.Toplevel(mainWindow)
     root.title("View Records")
     root.geometry("700x500")
@@ -40,5 +40,5 @@ def viewRecordWindow(mainWindow):
     for record in records:
         tree.insert("", "end", values=record)
 
-    # Add a close button
+   # Close Button
     tk.Button(root, text="Close", font=("Arial", 12), bg="#9370DB", fg="white", command=root.destroy).pack(pady=10)
