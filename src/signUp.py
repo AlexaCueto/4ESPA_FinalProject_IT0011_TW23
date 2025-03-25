@@ -4,6 +4,17 @@ from datetime import datetime
 import csv
 from fileHandler import saveRecords
 
+def isUserExists(firstName, middleName, lastName):
+    try:
+        with open("records.csv", "r", newline="") as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if len(row) >= 3 and row[0] == firstName and row[1] == middleName and row[2] == lastName:
+                    return True  #User already exists
+    except FileNotFoundError:
+        return False  #If file doesn't exist, no duplicates
+    return False  #No match found
+
 def signUpWindow(mainWindow):
     root = tk.Toplevel(mainWindow) #toplevel
     root.title("Sign Up")
@@ -32,6 +43,10 @@ def signUpWindow(mainWindow):
             messagebox.showerror("Error", "Please input a valid gender.")
             return
 
+        if isUserExists(firstName, middleName, lastName):
+            messagebox.showerror("Error", "This user has already been signed up!")
+            return (signUpWindow)
+        
         messagebox.showinfo("Success", f"Registration Successful!\n\nFirst Name: {firstName}\nMiddle Name: {middleName}\nLast Name: {lastName}\nBirthday: {birthday}\nGender: {gender}")
 
         saveRecords("records.csv", [firstName, middleName, lastName, birthday, gender])

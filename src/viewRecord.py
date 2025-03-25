@@ -24,7 +24,7 @@ def viewRecordWindow(mainWindow):
     root.geometry("700x500")
     root.configure(bg='#e6e6fa')
 
-    tk.Label(root, text="Records Viewer", font=("Arial", 18, 'bold'), bg='#e6e6fa', fg='#4B0082').pack(pady=3)
+    tk.Label(root, text="Records Viewer", font=("Roboto", 18, 'bold'), bg='#e6e6fa', fg='#4B0082').pack(pady=3)
 
     treeFrame = tk.Frame(root, bg='#e6e6fa')
     treeFrame.pack(pady=3, fill=tk.BOTH, expand=True)
@@ -50,4 +50,4 @@ def viewRecordWindow(mainWindow):
             tree.insert("", "end", values=(last_name, first_name, middle_name, birthday, gender))  
 
     # Close Button
-    tk.Button(root, text="Close", font=("Arial", 12), bg="#8B0000", fg="white", command=root.destroy).pack(side="bottom", pady=5, anchor="center")  
+    tk.Button(root, text="Close", font=("Roboto", 12), bg="#8B0000", fg="white", command=root.destroy).pack(side="bottom", pady=5, anchor="center")  
