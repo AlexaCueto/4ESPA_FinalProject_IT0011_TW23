@@ -113,93 +113,108 @@ root.mainloop()
 
 
 #SAM'S CODE STARTS HERE---
-def load_records(filename):
-    """Load records from a CSV file."""
+import tkinter as tk
+from tkinter import ttk, messagebox
+import csv
+
+RECORDS_FILE = "...\\records.csv"
+
+def save_records(data):
+    """Save records to a CSV file located outside the src folder."""
     try:
-        if not os.path.exists(filename):
-            raise FileNotFoundError("Error: The records file does not exist.")
-        
-        with open(filename, mode='r', newline='') as file:
-            reader = csv.DictReader(file)
-            records = list(reader)
-
-            if not records:
-                raise ValueError("Error: The records file is empty.")
-
-            return records
-
-    except FileNotFoundError as e:
-        print(e)
-    except ValueError as e:
-        print(e)
+        with open(RECORDS_FILE, mode='a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(data)
     except Exception as e:
-        print(f"Unexpected error: {e}")
+        messagebox.showerror("Error", f"Could not save record: {str(e)}")
+
+def load_records():
+    """Load records from a CSV file and skip the first row (header)."""
+    try:
+        with open(RECORDS_FILE, mode='r', newline='') as file:
+            reader = csv.reader(file)
+            records = list(reader)
+            
+            # Ensure there are records and skip the first row (header)
+            return records[1:] if len(records) > 1 else []
+        
+    except FileNotFoundError:
+        messagebox.showerror("Error", "The records file does not exist.")
+    except Exception as e:
+        messagebox.showerror("Unexpected Error", str(e))
 
     return []
 
-def display_all_records(records):
-    """Display all records."""
-    if not records:
-        print("No records available.")
-        return
+def display_all_records():
+    """Display all records in the treeview."""
+    records = load_records()
 
-    print("\nExisting Records:")
+    if not records:
+        return
+    
+    tree.delete(*tree.get_children())
     for record in records:
-        print(f"First Name: {record['First name']}, Middle Name: {record['Middle name']}, "
-              f"Last Name: {record['Last name']}, Birthday: {record['Birthday']}, Gender: {record['Gender']}")
-    print()
+        tree.insert("", "end", values=record)
 
-def search_by_last_name(records, last_name):
-    """Search for a record by last name."""
-    try:
-        if not last_name.strip():
-            raise ValueError("Search value cannot be empty.")
-
-        results = [record for record in records if record.get("Last name", "").strip().lower() == last_name.strip().lower()]
-
-        if results:
-            print("\nRecord(s) found:")
-            for record in results:
-                print(f"First Name: {record['First name']}, Middle Name: {record['Middle name']}, "
-                      f"Last Name: {record['Last name']}, Birthday: {record['Birthday']}, Gender: {record['Gender']}")
-        else:
-            print("No matching record found.")
-
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"Unexpected error: {e}")
-
-def search_records():
-    """Handles searching and displaying records."""
-    filename = "records.csv"
-    records = load_records(filename)
-
+def search_by_last_name():
+    """Search for a record by last name and display results."""
+    last_name = search_entry.get().strip()
+    
+    if not last_name:
+        messagebox.showerror("Error", "Search value cannot be empty.")
+        return
+    
+    records = load_records()
     if not records:
         return
+    
+    results = [record for record in records if len(record) >= 3 and record[2].strip().lower() == last_name.lower()]
+    
+    tree.delete(*tree.get_children())
+    if results:
+        for record in results:
+            tree.insert("", "end", values=record)
+    else:
+        messagebox.showinfo("No Record Found", "No matching record found.")
 
-    while True:
-        print("\nOptions:")
-        print("1. View all records")
-        print("2. Search a record by last name")
-        print("3. Exit")
+# Initialize main window
+root = tk.Tk()
+root.title("Records Viewer")
+root.geometry("700x500")
+root.configure(bg='#e6e6fa')
 
-        try:
-            choice = input("Enter your choice: ").strip()
+# Title Label
+title_label = tk.Label(root, text="Records Viewer", font=("Arial", 18, 'bold'), bg='#e6e6fa', fg='#4B0082')
+title_label.pack(pady=10)
 
-            if choice == "1":
-                display_all_records(records)
-            elif choice == "2":
-                last_name = input("Enter last name to search: ").strip()
-                search_by_last_name(records, last_name)
-            elif choice == "3":
-                print("Exiting the program.")
-                break
-            else:
-                print("Invalid choice. Please enter 1, 2, or 3.")
+# Search Frame
+search_frame = tk.Frame(root, bg='#e6e6fa')
+search_frame.pack(pady=5)
 
-        except Exception as e:
-            print(f"Unexpected error: {e}")
+search_label = tk.Label(search_frame, text="Search by Last Name:", font=("Arial", 12), bg='#e6e6fa')
+search_label.pack(side=tk.LEFT, padx=5)
 
-if __name__ == "__main__":
-    search_records()
+search_entry = tk.Entry(search_frame, font=("Arial", 12))
+search_entry.pack(side=tk.LEFT, padx=5)
+
+search_button = tk.Button(search_frame, text="Search", font=("Arial", 12, 'bold'), bg='#9370DB', fg='white', command=search_by_last_name)
+search_button.pack(side=tk.LEFT, padx=5)
+
+# Treeview Frame
+tree_frame = tk.Frame(root)
+tree_frame.pack(pady=10, fill=tk.BOTH, expand=True)
+
+columns = ("First Name", "Middle Name", "Last Name", "Birthday", "Gender")
+tree = ttk.Treeview(tree_frame, columns=columns, show='headings')
+
+for col in columns:
+    tree.heading(col, text=col)
+    tree.column(col, anchor=tk.CENTER, width=120)
+
+tree.pack(fill=tk.BOTH, expand=True)
+
+# View All Records Button
+view_all_button = tk.Button(root, text="View All Records", font=("Arial", 12, 'bold'), bg='#9370DB', fg='white', command=display_all_records)
+view_all_button.pack(pady=10)
+
+root.mainloop()
