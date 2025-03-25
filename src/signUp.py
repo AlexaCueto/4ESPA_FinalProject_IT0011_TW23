@@ -112,6 +112,7 @@ def open_sign_up_window(main_window):
     formFrame.columnconfigure(0, weight=2) #increased first column weight
     formFrame.columnconfigure(1, weight=3)
 
+#This will create a window for only one time
 if __name__ == "__main__":
     main_window = tk.Tk()
     main_window.title("Main Window")
