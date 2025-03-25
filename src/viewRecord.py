@@ -50,4 +50,4 @@ def viewRecordWindow(mainWindow):
             tree.insert("", "end", values=(last_name, first_name, middle_name, birthday, gender))  
 
     # Close Button
-    tk.Button(root, text="Close", font=("Arial", 12), bg="#9370DB", fg="white", command=root.destroy).pack(side="bottom", pady=5, anchor="center")  
+    tk.Button(root, text="Close", font=("Arial", 12), bg="#8B0000", fg="white", command=root.destroy).pack(side="bottom", pady=5, anchor="center")  
