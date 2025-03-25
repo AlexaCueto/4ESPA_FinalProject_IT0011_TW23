@@ -18,27 +18,32 @@ def loadRecords():
     return []
 
 def viewRecordWindow(mainWindow):
-    """Open a new window to display all records."""
+    """Open a new window to display all records with Last Name first."""
     root = tk.Toplevel(mainWindow)
     root.title("View Records")
     root.geometry("700x500")
     root.configure(bg='#e6e6fa')
 
-    tk.Label(root, text="Records Viewer", font=("Arial", 18, 'bold'), bg='#e6e6fa', fg='#4B0082').pack(pady=3)  # Reduce padding
+    tk.Label(root, text="Records Viewer", font=("Arial", 18, 'bold'), bg='#e6e6fa', fg='#4B0082').pack(pady=3)
 
     treeFrame = tk.Frame(root, bg='#e6e6fa')
     treeFrame.pack(pady=3, fill=tk.BOTH, expand=True)
 
-    tree = ttk.Treeview(treeFrame, columns=("First Name", "Middle Name", "Last Name", "Birthday", "Gender"), show='headings', height=10)  # ⬇️ Reduce height to lift button
-    for col in ("First Name", "Middle Name", "Last Name", "Birthday", "Gender"):
+    # ✅ Adjust column order: Last Name first
+    columns = ("Last Name", "First Name", "Middle Name", "Birthday", "Gender")
+    tree = ttk.Treeview(treeFrame, columns=columns, show='headings', height=10)
+
+    for col in columns:
         tree.heading(col, text=col)
         tree.column(col, anchor=tk.CENTER, width=120)
     tree.pack(fill=tk.BOTH, expand=True)
 
-    # Load and display records
+    # ✅ Load and correctly reorder records
     records = loadRecords()
     for record in records:
-        tree.insert("", "end", values=record)
+        if len(record) == 5:  # Ensure valid data
+            first_name, middle_name, last_name, birthday, gender = record  # Extract with correct order
+            tree.insert("", "end", values=(last_name, first_name, middle_name, birthday, gender))  # Insert with Last Name first
 
     # Close Button
-    tk.Button(root, text="Close", font=("Arial", 12), bg="#9370DB", fg="white", command=root.destroy).pack(side="bottom", pady=5, anchor="center")  # ⬆️ Reduce pady to lift
+    tk.Button(root, text="Close", font=("Arial", 12), bg="#9370DB", fg="white", command=root.destroy).pack(side="bottom", pady=5, anchor="center")  
