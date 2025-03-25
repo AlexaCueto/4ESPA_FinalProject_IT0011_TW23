@@ -118,7 +118,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import csv
 
-RECORDS_FILE = "...\\records.csv"
+RECORDS_FILE = "records.csv" #GUMAGANA TO 
 
 def save_records(data):
     """Save records to a CSV file located outside the src folder."""
