@@ -4,8 +4,8 @@ from datetime import datetime
 import csv
 from fileHandler import saveRecords
 
-def open_sign_up_window(main_window):
-    root = tk.Toplevel(main_window) #toplevel
+def signUpWindow(mainWindow):
+    root = tk.Toplevel(mainWindow) #toplevel
     root.title("Sign Up")
     root.geometry("600x500")
     root.configure(bg='#e6e6fa')
@@ -37,7 +37,7 @@ def open_sign_up_window(main_window):
         saveRecords("records.csv", [firstName, middleName, lastName, birthday, gender])
 
         root.destroy()  #Close the signup window after clicking signup
-        main_window.deiconify()  #Bring back main menu
+        mainWindow.deiconify()  #Bring back main menu
     
     #Function to update gender display with an upside-down arrow
     def update_gender_display(event=None):
@@ -112,12 +112,12 @@ def open_sign_up_window(main_window):
     formFrame.columnconfigure(0, weight=2) #increased first column weight
     formFrame.columnconfigure(1, weight=3)
 
-#This will create a window for only one time
+#This create a window for sign up only for one time
 if __name__ == "__main__":
-    main_window = tk.Tk()
-    main_window.title("Main Window")
-    main_window.geometry("500x300")
+    mainWindow = tk.Tk()
+    mainWindow.title("Main Window")
+    mainWindow.geometry("500x300")
 
-    ttk.Button(main_window, text="Open Sign Up", command=lambda: open_sign_up_window(main_window)).pack(pady=20)
+    ttk.Button(mainWindow, text="Open Sign Up", command=lambda: signUpWindow(mainWindow)).pack(pady=20)
 
-    main_window.mainloop()
+    mainWindow.mainloop()

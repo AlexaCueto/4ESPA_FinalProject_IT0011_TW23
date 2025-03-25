@@ -4,12 +4,6 @@ import csv
 
 RECORDS_FILE = "records.csv" #GUMAGANA TO 
 
-def open_search_window(parent):
-    search_window = tk.Toplevel(parent)
-    search_window.title("Search Records")
-    search_window.geometry("700x500")
-    search_window.configure(bg='#e6e6fa')
-
 def save_records(data):
     """Save records to a CSV file located outside the src folder."""
     try:
