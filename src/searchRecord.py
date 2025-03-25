@@ -18,11 +18,13 @@ def searchRecordWindow(mainWindow):
         
         if not searchValue:
             messagebox.showerror("Error", "Search value cannot be empty.")
+            root.destroy()  # Close window on error
             return
 
         records = loadRecords(RECORDS_FILE)
         if not records:
             messagebox.showinfo("No Records", "No records found in the system.")
+            root.destroy()  # Close window on error
             return
         
         results = [
@@ -38,10 +40,15 @@ def searchRecordWindow(mainWindow):
                 tree.insert("", "end", values=(record["First Name"], record["Middle Name"], record["Last Name"], record["Birthday"], record["Gender"]))
         else:
             messagebox.showinfo("No Record Found", "No matching record found.")
+            root.destroy()  # Close window on error
 
     def openViewRecords():
         """Open the view all records window."""
-        viewRecordWindow(mainWindow)  # Opens the view records page
+        viewRecordWindow(mainWindow)
+
+    def goBack():
+        """Return to the main menu."""
+        root.destroy()  # Close search window
 
     # Title Label
     tk.Label(root, text="Records Viewer", font=("Arial", 18, 'bold'), bg='#e6e6fa', fg='#4B0082').pack(pady=10)
@@ -52,7 +59,7 @@ def searchRecordWindow(mainWindow):
 
     tk.Label(searchFrame, text="Search A Record:", font=("Arial", 12), bg='#e6e6fa').pack(side=tk.LEFT, padx=5)
     
-    searchEntry = tk.Entry(searchFrame, font=("Arial", 12), width=40)  # Wider input field
+    searchEntry = tk.Entry(searchFrame, font=("Arial", 12), width=40)
     searchEntry.pack(side=tk.LEFT, padx=5)
 
     tk.Button(searchFrame, text="Search", font=("Arial", 12, 'bold'), bg='#9370DB', fg='white', command=searchByName).pack(side=tk.LEFT, padx=5)
@@ -70,15 +77,9 @@ def searchRecordWindow(mainWindow):
 
     tree.pack(fill=tk.BOTH, expand=True)
 
-    # View All Records Button (Now Links to View Records Page)
-    tk.Button(root, text="View All Records", font=("Arial", 12, 'bold'), bg='#9370DB', fg='white', command=openViewRecords).pack(pady=10)
+    # Buttons Frame
+    buttonFrame = tk.Frame(root, bg='#e6e6fa')
+    buttonFrame.pack(pady=10)
 
-# Ensure this module can be imported without running code
-if __name__ == "__main__":
-    mainWindow = tk.Tk()
-    mainWindow.title("Main Window")
-    mainWindow.geometry("500x300")
-
-    tk.Button(mainWindow, text="Open Search", command=lambda: searchRecordWindow(mainWindow)).pack(pady=20)
-
-    mainWindow.mainloop()
+    tk.Button(buttonFrame, text="View All Records", font=("Arial", 12, 'bold'), bg='#9370DB', fg='white', command=openViewRecords).pack(side=tk.LEFT, padx=10)
+    tk.Button(buttonFrame, text="Back", font=("Arial", 12, 'bold'), bg='#8B0000', fg='white', command=goBack).pack(side=tk.LEFT, padx=10)
