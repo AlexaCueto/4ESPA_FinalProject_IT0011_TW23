@@ -6,10 +6,11 @@ from viewRecord import viewRecordWindow
 def main_menu():
     root = tk.Tk()
     root.title("Main Menu")
-    root.geometry("400x350")
+    root.geometry("700x500")
     root.configure(bg="#e6e6fa")
 
-    tk.Label(root, text="Welcome to the System", font=("Roboto", 18, 'bold'), bg="#e6e6fa", fg="#9370DB").pack(pady=25)
+    tk.Label(root, text="Welcome to User Registration System", font=("Roboto", 18, 'bold'), bg="#e6e6fa", fg="#9370DB").pack(pady=30)
+    tk.Label(root, text="What do you want to do for today?", font = ("Roboto", 15, 'italic'), bg="#e6e6fa", fg="#9370DB").pack(pady= 15)
 
     button_config = {"font": ("Roboto", 14), "bg": "#9370DB", "fg": "white", "width": 15, "height": 1}
 

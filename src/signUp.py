@@ -18,7 +18,7 @@ def isUserExists(firstName, middleName, lastName):
 def signUpWindow(mainWindow):
     root = tk.Toplevel(mainWindow) #toplevel
     root.title("Sign Up")
-    root.geometry("600x500")
+    root.geometry("700x500")
     root.configure(bg='#e6e6fa')
     
     #Function to handle signup
@@ -126,13 +126,5 @@ def signUpWindow(mainWindow):
     #Adjust column weights for responsiveness
     formFrame.columnconfigure(0, weight=2) #increased first column weight
     formFrame.columnconfigure(1, weight=3)
-
-#This create a window for sign up only for one time
-if __name__ == "__main__":
-    mainWindow = tk.Tk()
-    mainWindow.title("Main Window")
-    mainWindow.geometry("500x300")
-
-    ttk.Button(mainWindow, text="Open Sign Up", command=lambda: signUpWindow(mainWindow)).pack(pady=20)
 
     mainWindow.mainloop()
