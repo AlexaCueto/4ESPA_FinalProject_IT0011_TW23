@@ -28,11 +28,20 @@ def searchRecordWindow(mainWindow):
             root.destroy()  #Close window on error
             return
         
-        results = [
-            record for record in records if 
-            searchValue in record.get("First Name", "").strip().lower() or
-            searchValue in record.get("Middle Name", "").strip().lower() or
-            searchValue in record.get("Last Name", "").strip().lower()
+        if searchCategory == "First Name":
+            results = [
+                record for record in records
+                if record.get("First Name", "").strip().lower().startswith(searchValue)
+            ]
+        elif searchCategory == "Middle Name":
+            results = [
+                record for record in records
+                if record.get("Middle Name", "").strip().lower().startswith(searchValue)
+            ]
+        elif searchCategory == "Last Name":
+            results = [
+            record for record in records
+            if record.get("Last Name", "").strip().lower().startswith(searchValue)
         ]
         
         tree.delete(*tree.get_children())
@@ -61,7 +70,7 @@ def searchRecordWindow(mainWindow):
     tk.Label(searchFrame, text="Search A Record:", font=("Roboto", 12), bg='#e6e6fa').pack(side=tk.LEFT, padx=5)
     
     #Dropdown to select search type (First Name or Last Name)
-    searchType = ttk.Combobox(searchFrame, values=["First Name", "Last Name"], font=("Roboto", 12), state="readonly")
+    searchType = ttk.Combobox(searchFrame, values=["First Name", "Middle Name", "Last Name"], font=("Roboto", 12), state="readonly")
     searchType.set("Last Name")  # Default to Last Name
     searchType.pack(side=tk.LEFT, padx=5)
 
