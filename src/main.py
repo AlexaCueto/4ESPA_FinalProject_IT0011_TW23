@@ -1,7 +1,7 @@
-import tkinter as tk
-from signUp import signUpWindow
-from searchRecord import searchRecordWindow
-from viewRecord import viewRecordWindow
+import tkinter as tk #gui 
+from signUp import signUpWindow #signUp.py
+from searchRecord import searchRecordWindow #searchRecord.py
+from viewRecord import viewRecordWindow #viewRecord.py
 
 def main_menu():
     root = tk.Tk()

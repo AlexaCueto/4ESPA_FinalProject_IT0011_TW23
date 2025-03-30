@@ -1,8 +1,8 @@
-import tkinter as tk
+import tkinter as tk #gui
 from tkinter import messagebox, ttk
 from datetime import datetime
-import csv
-from fileHandler import saveRecords
+import csv #file handling/data persistence
+from fileHandler import saveRecords #csv file
 
 def isUserExists(firstName, middleName, lastName):
     try:

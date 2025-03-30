@@ -1,6 +1,6 @@
-import tkinter as tk
+import tkinter as tk #gui
 from tkinter import ttk, messagebox
-import csv
+import csv #file handling/data persistence
 
 RECORDS_FILE = "records.csv"
 

@@ -1,6 +1,6 @@
-import tkinter as tk
+import tkinter as tk #gui
 from tkinter import ttk, messagebox
-from fileHandler import loadRecords
+from fileHandler import loadRecords #csv file
 from viewRecord import viewRecordWindow
 
 RECORDS_FILE = "records.csv"
